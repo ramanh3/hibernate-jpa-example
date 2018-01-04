@@ -5,9 +5,9 @@
         <class>org.raman.hibernate.org.raman.hibernate.domain.User</class>
         <properties>
             <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver" />
-            <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://ramanh3-win-01;databaseName=master" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://*****;databaseName=master" />
             <property name="javax.persistence.jdbc.user" value="sa" />
-            <property name="javax.persistence.jdbc.password" value="Password1!" />
+            <property name="javax.persistence.jdbc.password" value="*****" />
             <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
             <property name="show_sql" value="true"/>
             <property name="hibernate.temp.use_jdbc_metadata_defaults" value="false"/>

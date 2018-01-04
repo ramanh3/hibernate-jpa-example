@@ -28,9 +28,15 @@
             <artifactId>sqljdbc4</artifactId>
             <version>${sqljdbc4.version}</version>
         </dependency>
+        <dependency>
+            <groupId>log4j</groupId>
+            <artifactId>log4j</artifactId>
+            <version>${log4j.version}</version>
+        </dependency>
     </dependencies>
     <properties>
         <hibernate.version>4.2.7.Final</hibernate.version>
         <sqljdbc4.version>4.0</sqljdbc4.version>
+        <log4j.version>1.2.17</log4j.version>
     </properties>
 </project>
