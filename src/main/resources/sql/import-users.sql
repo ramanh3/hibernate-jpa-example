@@ -1,2 +1,1 @@
-
-INSERT INTO users(id, name) VALUES(1, 'admin');
+INSERT INTO users(id, name,description) VALUES(1, 'admin', N'חיים');

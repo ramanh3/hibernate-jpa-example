@@ -11,7 +11,11 @@ import org.raman.hibernate.org.raman.hibernate.domain.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by ramanh3 on 04/01/2018.
@@ -20,6 +24,7 @@ public class HClient {
     EntityManagerFactory entityManagerFactory;
     EntityManager entityManager;
     Logger logger = Logger.getLogger(HClient.class);
+    Random random = new SecureRandom();
     public HClient() {
         entityManagerFactory = Persistence.createEntityManagerFactory("PU");
         entityManager = entityManagerFactory.createEntityManager();
@@ -29,10 +34,9 @@ public class HClient {
         entityManager.getTransaction().begin();
         List<User> result = entityManager.createQuery("from User", User.class).getResultList();
         for (User user : result) {
-            logger.info("User (" + user.getName() + ") : " + user.getId());
+            logger.info("User " + user);
         }
         entityManager.getTransaction().commit();
-        entityManager.close();
     }
 
     public void close() {
@@ -46,7 +50,7 @@ public class HClient {
         Criteria executableCriteria = getExecutableCriteria(criteria);
         List<User> result = executableCriteria.list();
         for (User user : result) {
-            logger.info("User (" + user.getName() + ") : " + user.getId());
+            logger.info("User " + user);
         }
         entityManager.getTransaction().commit();
       }
@@ -60,7 +64,7 @@ public class HClient {
         Criteria executableCriteria = getExecutableCriteria(criteria);
         List<User> result = executableCriteria.list();
         for (User user : result) {
-            logger.info("User (" + user.getName() + ") : " + user.getId());
+            logger.info("User " + user);
         }
         entityManager.getTransaction().commit();
       }
@@ -69,11 +73,24 @@ public class HClient {
         return criteria.getExecutableCriteria((Session) entityManager.getDelegate());
     }
 
+    private void createUser(){
+        User user = new User();
+        final long id = Math.abs(random.nextLong());
+        user.setName("Test-"+id);
+        String description = new String((id+" בדיקה").getBytes(), StandardCharsets.UTF_8);
+        user.setDescription(description);
+        entityManager.getTransaction().begin();
+        entityManager.persist(user);
+        entityManager.getTransaction().commit();
+        entityManager.detach(user);
+    }
+
     public static void main(String[] args) {
         HClient client = new HClient();
-        client.execSimpleQuery();
+        client.createUser();
+       // client.execSimpleQuery();
         client.execSimpleCriteria();
-        client.execSqlRestrictionCriteria();
+        //client.execSqlRestrictionCriteria();
         client.close();
     }
 }
